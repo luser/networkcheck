@@ -10,8 +10,8 @@ def check_host(host):
                 stdout=open(os.devnull, 'wb'),
                 stderr=STDOUT) == 0
 
-def check():
-    hosts = [
+def hosts():
+    return [
         ('192.168.1.30', 'LAN'),
         ('192.168.1.2', 'Local Router'),
         ('192.168.1.200', 'Local WiFi'),
@@ -19,11 +19,13 @@ def check():
         ('192.168.1.1', 'Remote Router'),
         ('8.8.8.8', 'Internet'),
     ]
+
+def check():
     down = False
-    for (host, name) in hosts:
+    for (host, name) in hosts():
         down = down or not check_host(host)
-        yield (name, not down)
+        yield (host, name, not down)
 
 if __name__ == '__main__':
-    for (name, status) in check():
+    for (host, name, status) in check():
         print('{}: {}'.format(name, 'UP' if status else 'DOWN'))
