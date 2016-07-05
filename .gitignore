@@ -1,3 +1,6 @@
 *~
 *.pyc
 server.log
+networkcheck
+networkcheck.conf
+virtualenv/
