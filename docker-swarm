@@ -1,0 +1,5 @@
+# create a service
+docker service create --replicas 1 --name networkcheck --publish 10000:80 luser/networkcheck:0.1
+
+# update the service to a newer image
+docker service update --image luser/networkcheck:0.N networkcheck
