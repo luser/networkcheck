@@ -5,6 +5,7 @@ import os
 import web
 
 from networkcheck import check, hosts
+from signalstrength import get_signal_strength
 
 class index:
     def GET(self):
@@ -16,9 +17,15 @@ class netdata:
     def GET(self):
         return json.dumps({'hosts': list(check())})
 
+class wifisignal:
+    def GET(self):
+        s = get_signal_strength('192.168.1.200')
+        return json.dumps({'signal': s})
+
 urls = (
     '/', index,
     '/data', netdata,
+    '/wifisignal', wifisignal,
 )
 
 app = web.application(urls, globals())

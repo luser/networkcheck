@@ -17,6 +17,9 @@ table {
   font-size: 3.2rem;
   border-spacing: 1rem 1rem;
 }
+#wifisignal {
+  width: 100%;
+}
 .UNKNOWN {
   background-color: lightgray;
   text-align: center;

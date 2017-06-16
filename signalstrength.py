@@ -5,11 +5,11 @@ import os
 from pysnmp.hlapi import *
 import sys
 
-def get_signal_strength():
+def get_signal_strength(ip):
     errorIndication, errorStatus, errorIndex, varBinds = next(
         getCmd(SnmpEngine(),
                CommunityData('public', mpModel=0),
-               UdpTransportTarget(('192.168.1.200', 161)),
+               UdpTransportTarget((ip, 161)),
                ContextData(),
                # UBNT-AirMAX-MIB::ubntWlStatSignal
                ObjectType(ObjectIdentity('.1.3.6.1.4.1.41112.1.4.5.1.5.1'))
@@ -29,7 +29,7 @@ def open_tsv(path):
     return w
 
 def main(outfile):
-    s = get_signal_strength()
+    s = get_signal_strength('192.168.1.200')
     if s is not None:
         open_tsv(outfile).writerow([datetime.utcnow().isoformat(), s])
 

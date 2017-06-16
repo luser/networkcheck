@@ -18,6 +18,18 @@ function get_network_status() {
   });
 }
 
+function get_wifi_signal() {
+  log('get_wifi_signal');
+  return new Promise((resolve, reject) => {
+    var req = new XMLHttpRequest();
+    req.responseType = 'json';
+    req.onload = () => { log('Got wifi signal'); resolve(req.response); };
+    req.onerror = (e) => reject(e);
+    req.open('GET', '/wifisignal', true);
+    req.send(null);
+  });
+}
+
 function dom_loaded() {
   return new Promise((resolve, reject) => {
     function listener() {
@@ -43,19 +55,35 @@ function fill_table(data) {
   }
 }
 
+function fill_wifi_signal(data) {
+  log('fill_wifi_signal');
+  if (data.signal != null) {
+    document.getElementById('wifisignal').value = Math.min(Math.max(data.signal, -100), -60);
+    document.getElementById('wifisignalvalue').innerText = data.signal;
+  }
+}
+
 function set_refresh_timer() {
   log('set_refresh_timer');
   setTimeout(() => {
-    get_network_status()
-      .then(fill_table)
-      .then(set_refresh_timer)
+    Promise.all([
+      get_network_status()
+        .then(fill_table),
+      get_wifi_signal()
+        .then(fill_wifi_signal),
+    ]).then(set_refresh_timer)
       .catch((e) => console.error(e));
   }, 30000);
 }
 
 Promise.all([
-  get_network_status(),
-  dom_loaded(),
-]).then((data) => fill_table(data[0]))
-  .then(set_refresh_timer)
+  Promise.all([
+    get_network_status(),
+    dom_loaded(),
+  ]).then((data) => fill_table(data[0])),
+  Promise.all([
+    get_wifi_signal(),
+    dom_loaded(),
+  ]).then((data) => fill_wifi_signal(data[0])),
+]).then(set_refresh_timer)
   .catch((e) => console.error(e));
