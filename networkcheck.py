@@ -12,7 +12,6 @@ def check_host(host):
 
 def hosts():
     return [
-        ('192.168.1.30', 'LAN'),
         ('192.168.1.2', 'Local Router'),
         ('192.168.1.200', 'Local WiFi'),
         ('192.168.1.201', 'Remote WiFi'),
