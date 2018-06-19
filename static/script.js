@@ -57,9 +57,10 @@ function fill_table(data) {
 
 function fill_wifi_signal(data) {
   log('fill_wifi_signal');
-  if (data.signal != null) {
-    document.getElementById('wifisignal').value = Math.min(Math.max(data.signal, -100), -60);
-    document.getElementById('wifisignalvalue').innerText = data.signal;
+  for (let {host, signal} of data.hosts) {
+    log(`fill_wifi_signal: ${host}, ${signal}`);
+    document.getElementById(`wifisignal_${host}`).value = Math.min(Math.max(signal, -100), -60);
+    document.getElementById(`wifisignalvalue_${host}`).innerText = signal;
   }
 }
 
