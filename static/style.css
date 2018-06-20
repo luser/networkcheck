@@ -33,6 +33,9 @@ meter {
   text-align: center;
 }
 
+.UNKNOWN, .UP, .DOWN {
+  border-radius: 5px;
+}
 #signalbody {
   width: 90%;
   height: 90%;

@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals
 
+import codecs
 import json
 import os
 import web
@@ -13,7 +14,8 @@ from signalstrength import get_signal_strength
 
 class index:
     def GET(self):
-        data = open(os.path.join(os.path.dirname(__file__), 'index.html'), 'rb').read()
+        data = codecs.open(os.path.join(os.path.dirname(__file__), 'index.html'),
+                           'rb', 'utf-8').read()
         hosttable = '\n'.join(
             '<tr id="%s"><td>%s</td><td class="UNKNOWN">?</td></tr>' % h for h in hosts()
         )
