@@ -17,6 +17,10 @@ table {
   font-size: 3.2rem;
   border-spacing: 1rem 1rem;
 }
+a {
+  text-decoration: none;
+  color: black;
+}
 meter {
   width: 100%;
 }
