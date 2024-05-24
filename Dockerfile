@@ -1,4 +1,5 @@
-FROM tiangolo/uwsgi-nginx
+FROM tiangolo/uwsgi-nginx:python3.11
+RUN apt-get update && apt-get install -y iputils-ping
 RUN rm /app/main.py
 RUN pip install --disable-pip-version-check web.py pysnmp
 ADD static /app/static/
